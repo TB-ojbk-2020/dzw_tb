@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<style>
+	#tyx{
+		width:800px;
+		padding:20px;
+	}
+	.left{
+		float:left;
+	}
+	.right{
+		float:right;
+	}
+	.con{
+		clear:both;
+	}
+	table{
+		width:700px;
+	}
+</style>
+<link th:href="@{/css/bootstrap.min.css}"  rel="stylesheet" type="text/css"/>
+<body>
+	<div id="tyx">
+		<div class="left">
+			<p>客户编号：<input type="text" v-model="lista.id"></p>
+			<p>联&nbsp;&nbsp;系&nbsp; 人：<input type="text" v-model="lista.lianxir"></p>
+			<p>联系电话：<input type="text" v-model="lista.lianxid"></p>
+			<p>负&nbsp;&nbsp;责&nbsp; 人：<input type="text" v-model="lista.fuzer"></p>
+		</div>
+		<div class="right">
+			<p>客户名称：<input type="text" v-model="lista.name"></p>
+			<p>创建日期：<input type="text" v-model="lista.tdata"></p>
+			<p class="row"><span  class="col-xs-2">送货地址：</span><input class="col-xs-2" type="text" v-model="lista.dizhi.did"><input class="col-xs-3" type="text" v-model="lista.dizhi.dname"></p>
+			<p>税务登记号：<input type="text" v-model="lista.denjihao"></p>
+		</div>
+		<div class="con row">
+			<p>
+				<span class="col-xs-2"></span>
+				<button class="col-xs-1" @click="cha">查询</button>
+				<span class="col-xs-2"></span>
+				<button class="col-xs-1" @click="tian">保存</button>
+				<span class="col-xs-6"></span>
+			</p>
+			<table border="1">
+				<tr>
+					<th>编号</td>
+					<th>地址</td>
+					<th>客户号</td>
+				</tr>
+				<tr v-for="item in listb">
+					<td>{{item.did}}</td>
+					<td>{{item.dname}}</td>
+					<td>{{item.id}}</td>
+				</tr>
+			</table>
+		</div>
+	</div>
+	<script type="text/javascript" th:src="@{/js/jquery-1.12.4.js}"></script>
+	<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/vue.js}"></script>
+	<script type="text/javascript">
+		var vm=new Vue({
+			el:"#tyx",
+			data(){
+				return {
+					lista:{
+						dizhi:{} 
+					},
+					listb:[]
+				}
+			},
+			methods:{
+				find(){
+					var that=this;
+					$.ajax({
+						url:"[[@{/con/finddi}]]",
+						success:function(result){
+							console.log(result);
+							that.listb = result;
+						}
+					});
+				},tian(){
+					var that=this;
+					console.log(that.lista);
+					var str = JSON.stringify(that.lista);
+					console.log(str);
+					$.ajax({
+						url:"[[@{/con/update}]]",
+						data:str,
+						type:"post",
+						contentType:"application/json;charset=utf-8",
+						success:function(result){
+							alert(result);
+						}
+					});
+				},cha(){
+					var that=this;
+					$.ajax({
+						url:"[[@{/con/findById}]]",
+						data:{
+							id:that.lista.id
+						},
+						success:function(result){
+							console.log(result);
+							that.lista = result;
+						}
+					});
+				},da(){
+					var that=this;
+					that.lista.id=2;
+				}
+			},
+			created(){
+				var that=this;
+				that.find();
+			}
+		});
+	</script>
+</body>
+</html>

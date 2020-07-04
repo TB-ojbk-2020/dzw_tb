@@ -1,0 +1,243 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.accp.dao.KehuMapper" >
+  <resultMap id="BaseResultMap" type="com.accp.domain.Kehu" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="lianxir" property="lianxir" jdbcType="VARCHAR" />
+    <result column="tdata" property="tdata" jdbcType="VARCHAR" />
+    <result column="lianxid" property="lianxid" jdbcType="VARCHAR" />
+    <result column="fuzer" property="fuzer" jdbcType="VARCHAR" />
+    <result column="denjihao" property="denjihao" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Example_Where_Clause" >
+    <where >
+      <foreach collection="oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause" >
+    <where >
+      <foreach collection="example.oredCriteria" item="criteria" separator="or" >
+        <if test="criteria.valid" >
+          <trim prefix="(" suffix=")" prefixOverrides="and" >
+            <foreach collection="criteria.criteria" item="criterion" >
+              <choose >
+                <when test="criterion.noValue" >
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue" >
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue" >
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue" >
+                  and ${criterion.condition}
+                  <foreach collection="criterion.value" item="listItem" open="(" close=")" separator="," >
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List" >
+    id, name, lianxir, tdata, lianxid, fuzer, denjihao
+  </sql>
+  <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.accp.domain.KehuExample" >
+    select
+    <if test="distinct" >
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from kehu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null" >
+      order by ${orderByClause}
+    </if>
+  </select>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from kehu
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from kehu
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.accp.domain.KehuExample" >
+    delete from kehu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.accp.domain.Kehu" >
+    insert into kehu (id, name, lianxir, 
+      tdata, lianxid, fuzer, 
+      denjihao)
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{lianxir,jdbcType=VARCHAR}, 
+      #{tdata,jdbcType=VARCHAR}, #{lianxid,jdbcType=VARCHAR}, #{fuzer,jdbcType=VARCHAR}, 
+      #{denjihao,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.accp.domain.Kehu" >
+    insert into kehu
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="lianxir != null" >
+        lianxir,
+      </if>
+      <if test="tdata != null" >
+        tdata,
+      </if>
+      <if test="lianxid != null" >
+        lianxid,
+      </if>
+      <if test="fuzer != null" >
+        fuzer,
+      </if>
+      <if test="denjihao != null" >
+        denjihao,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="lianxir != null" >
+        #{lianxir,jdbcType=VARCHAR},
+      </if>
+      <if test="tdata != null" >
+        #{tdata,jdbcType=VARCHAR},
+      </if>
+      <if test="lianxid != null" >
+        #{lianxid,jdbcType=VARCHAR},
+      </if>
+      <if test="fuzer != null" >
+        #{fuzer,jdbcType=VARCHAR},
+      </if>
+      <if test="denjihao != null" >
+        #{denjihao,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.accp.domain.KehuExample" resultType="java.lang.Integer" >
+    select count(*) from kehu
+    <if test="_parameter != null" >
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map" >
+    update kehu
+    <set >
+      <if test="record.id != null" >
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.name != null" >
+        name = #{record.name,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lianxir != null" >
+        lianxir = #{record.lianxir,jdbcType=VARCHAR},
+      </if>
+      <if test="record.tdata != null" >
+        tdata = #{record.tdata,jdbcType=VARCHAR},
+      </if>
+      <if test="record.lianxid != null" >
+        lianxid = #{record.lianxid,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fuzer != null" >
+        fuzer = #{record.fuzer,jdbcType=VARCHAR},
+      </if>
+      <if test="record.denjihao != null" >
+        denjihao = #{record.denjihao,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map" >
+    update kehu
+    set id = #{record.id,jdbcType=INTEGER},
+      name = #{record.name,jdbcType=VARCHAR},
+      lianxir = #{record.lianxir,jdbcType=VARCHAR},
+      tdata = #{record.tdata,jdbcType=VARCHAR},
+      lianxid = #{record.lianxid,jdbcType=VARCHAR},
+      fuzer = #{record.fuzer,jdbcType=VARCHAR},
+      denjihao = #{record.denjihao,jdbcType=VARCHAR}
+    <if test="_parameter != null" >
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.accp.domain.Kehu" >
+    update kehu
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="lianxir != null" >
+        lianxir = #{lianxir,jdbcType=VARCHAR},
+      </if>
+      <if test="tdata != null" >
+        tdata = #{tdata,jdbcType=VARCHAR},
+      </if>
+      <if test="lianxid != null" >
+        lianxid = #{lianxid,jdbcType=VARCHAR},
+      </if>
+      <if test="fuzer != null" >
+        fuzer = #{fuzer,jdbcType=VARCHAR},
+      </if>
+      <if test="denjihao != null" >
+        denjihao = #{denjihao,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.accp.domain.Kehu" >
+    update kehu
+    set name = #{name,jdbcType=VARCHAR},
+      lianxir = #{lianxir,jdbcType=VARCHAR},
+      tdata = #{tdata,jdbcType=VARCHAR},
+      lianxid = #{lianxid,jdbcType=VARCHAR},
+      fuzer = #{fuzer,jdbcType=VARCHAR},
+      denjihao = #{denjihao,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
